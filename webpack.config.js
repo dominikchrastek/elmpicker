@@ -53,7 +53,7 @@ if ( TARGET_ENV === "development" ) {
 
 		entry: [
 			"webpack-dev-server/client?http://localhost:8080",
-			"app/static/index.js"
+			path.resolve( __dirname, "app/static/index.js")
 		],
 
 		devServer: {
