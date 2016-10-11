@@ -1,37 +1,38 @@
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.App as Html
-import Html.Events exposing ( onClick )
+import Html.App as App
 
+import Components.Counter as Counter
 
 -- APP
 main : Program Never
 main =
-  Html.beginnerProgram { model = model, view = view, update = update }
+  App.beginnerProgram
+  { model = init 0
+  , view = view
+  , update = update
+  }
 
+type alias Model =
+  { firstCounter : Counter.Model }
 
--- MODEL
-type alias Model = Int
-
-model : number
-model = 0
-
+init : Int -> Model
+init first =
+  { firstCounter = Counter.init first }
 
 -- UPDATE
-type Msg = Increment
+
+type Msg =
+  First Counter.Msg
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Increment -> model + 1
+    First msg ->
+      { model | firstCounter = Counter.update msg model.firstCounter }
 
 view : Model -> Html Msg
 view model =
-  div [ onClick Increment]
-  [
-    text "Elmpicker, Click on me!",
-    div [ class "elpicker"]
-    [
-      text (toString model)
+  div
+    []
+    [ App.map First (Counter.view model.firstCounter)
     ]
-  ]

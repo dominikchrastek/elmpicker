@@ -1,4 +1,6 @@
-require("../stylus/Main.styl")
+require("../styles/stylus/Main.styl");
+require("../styles/sass/Main.scss");
 
-var Elm = require("../scripts/Main")
-Elm.Main.embed( document.getElementById("app"))
+
+var Elm = require("../scripts/Main.elm");
+Elm.Main.embed( document.getElementById("app"));
