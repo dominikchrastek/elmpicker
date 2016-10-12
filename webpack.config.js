@@ -6,7 +6,6 @@ var autoprefixer      = require( "autoprefixer" );
 var ExtractTextPlugin = require( "extract-text-webpack-plugin" );
 // var CopyWebpackPlugin = require( "copy-webpack-plugin" );
 var commonLoaders = require("./webpack.loaders");
-var sassLintPlugin = require("sasslint-webpack-plugin");
 
 
 var TARGET_ENV = process.env.npm_lifecycle_event === "build" ? "production" : "development";
@@ -26,14 +25,17 @@ var commonConfig = {
 
 	module: {
 		noParse: /\.elm$/,
+		preloaders: [
+			{
+				test: /\.scss$/,
+				loader: "scsslint",
+				exclude: /node_modules/
+			}
+		],
 		loaders: commonLoaders
 	},
 
 	plugins: [
-		new sassLintPlugin({
-			context: ["./app/styles/sass/*.s+(a|c)ss"],
-			ignorePlugins: ["extract-text-webpack-plugin"]
-		}),
 		new HtmlWebpackPlugin({
 			template: "app/static/index.html",
 			inject:   "body",
